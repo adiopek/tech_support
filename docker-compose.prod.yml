@@ -14,18 +14,13 @@ services:
       DATABASE_URL: "postgresql://app:app@db:5432/app?serverVersion=16&charset=utf8"
       REDIS_URL: "redis://redis:6379"
       MESSENGER_TRANSPORT_DSN: "redis://redis:6379/messages"
-      APP_ENV: prod
-      APP_SECRET: ${APP_SECRET:-SetSecretHereInEnvFile}
-      FRANKENPHP_CONFIG: |
-        worker public/index.php
-      COMPOSER_ALLOW_SUPERUSER: "1"
     depends_on:
       db:
         condition: service_healthy
       redis:
         condition: service_healthy
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost"]
+      test: ["CMD", "curl", "-f", "http://localhost/api"]
       interval: 10s
       timeout: 5s
       retries: 3

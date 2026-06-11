@@ -19,6 +19,7 @@ RUN pecl install redis && docker-php-ext-enable redis
 RUN docker-php-ext-install \
     pdo_pgsql
 
+COPY Caddyfile /etc/caddy/Caddyfile
 COPY . /app
 
 COPY docker/php/docker-entrypoint.sh /usr/local/bin/docker-entrypoint

@@ -1,0 +1,19 @@
+{
+    frankenphp
+    order php_server before file_server
+}
+
+{$SERVER_NAME} {
+    log {
+        level {$CADDY_DEBUG:INFO}
+    }
+
+    root * public/
+    encode zstd gzip
+
+    php_server {
+        worker public/index.php
+    }
+
+    file_server
+}
