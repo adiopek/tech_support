@@ -2,8 +2,11 @@
 
 namespace App\Dto;
 
+use ApiPlatform\Metadata\ApiProperty;
+
 class TechnicianPerformanceDto
 {
+    #[ApiProperty(identifier: true)]
     public int $technicianId;
     public string $name;
     public int $closedTickets;

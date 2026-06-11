@@ -7,6 +7,7 @@ use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\OpenApi\Model\Operation;
 use ApiPlatform\OpenApi\Model\Response;
+use App\Dto\TechnicianPerformanceDto;
 use App\Repository\TechnicianRepository;
 use App\State\TechnicianPerformanceProvider;
 use Doctrine\ORM\Mapping as ORM;
@@ -23,12 +24,14 @@ use Symfony\Component\Validator\Constraints as Assert;
             openapi: new Operation(
                 responses: [
                     '200' => new Response(
-                        description: 'Technicians performance statistics',
-                    )
+                        description: 'Technicians reports',
+                    ),
                 ],
                 summary: 'Technicians performance report',
                 description: 'Returns statistics about closed tickets and average closing time for each technician.'
             ),
+            paginationEnabled: false,
+            output: TechnicianPerformanceDto::class,
             provider: TechnicianPerformanceProvider::class
         )
     ]
