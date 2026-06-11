@@ -18,5 +18,14 @@ jobs:
           key: ${{ secrets.VPS_SSH_KEY }}
           script: |
             cd /opt/tech_support
+
+            cat > .env.prod <<EOF
+            APP_ENV=prod
+            APP_SECRET=${{ secrets.APP_SECRET }}
+            POSTGRES_DB=${{ secrets.POSTGRES_DB }}
+            POSTGRES_USER=${{ secrets.POSTGRES_USER }}
+            POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }}
+            EOF
+            
             git pull
             make deploy
