@@ -9,8 +9,15 @@ services:
     restart: unless-stopped
     ports:
       - "8080:80"
-    env_file:
-      - .env.local
+    environment:
+      SERVER_NAME: ":80"
+      APP_ENV: prod
+      APP_DEBUG: 0
+      APP_SECRET: ${APP_SECRET:-ThisTokenIsNotSoSecretChangeIt}
+      DATABASE_URL: ${DATABASE_URL}
+      REDIS_URL: "redis://redis:6379"
+      MESSENGER_TRANSPORT_DSN: "redis://redis:6379/messages"
+      VARNISH_URLS:
     depends_on:
       db:
         condition: service_healthy
@@ -26,8 +33,10 @@ services:
   db:
     image: postgres:16-alpine
     restart: unless-stopped
-    env_file:
-      - .env.local
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-app}
+      POSTGRES_USER: ${POSTGRES_USER:-app}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
     volumes:
       - db-data:/var/lib/postgresql/data
     healthcheck:
