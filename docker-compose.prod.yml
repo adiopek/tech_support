@@ -10,6 +10,9 @@ services:
     ports:
       - "8080:80"
     environment:
+      APP_ENV: prod
+      APP_DEBUG: 0
+      APP_SECRET: 54fed8e1c257a497ce5d519aaab06c8a
       SERVER_NAME: ":80"
       DATABASE_URL: "postgresql://app:app@db:5432/app?serverVersion=16&charset=utf8"
       REDIS_URL: "redis://redis:6379"
