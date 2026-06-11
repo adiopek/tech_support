@@ -70,10 +70,10 @@ class TicketApiTest extends ApiTestCase
         $ticket = $this->entityManager->getRepository(Ticket::class)->findOneBy([]);
         $technician = $this->entityManager->getRepository(Technician::class)->findOneBy(['active' => true]);
 
-        $response = static::createClient()->request('POST', '/api/tickets/' . $ticket->getId() . '/assign', [
+        $response = static::createClient()->request('PATCH', '/api/tickets/' . $ticket->getId() . '/assign', [
             'headers' => [
                 'x-api-key' => 'admin-token',
-                'Content-Type' => 'application/ld+json',
+                'Content-Type' => 'application/merge-patch+json',
                 'Accept' => 'application/ld+json',
             ],
             'json' => [
@@ -81,7 +81,7 @@ class TicketApiTest extends ApiTestCase
             ],
         ]);
 
-        $this->assertResponseStatusCodeSame(201);
+        $this->assertResponseStatusCodeSame(200);
         $this->assertJsonContains([
             '@type' => 'Ticket',
             'status' => Ticket::STATUS_ASSIGNED,

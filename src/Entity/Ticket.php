@@ -22,6 +22,7 @@ use App\Repository\TicketRepository;
 use App\State\TicketAssignProcessor;
 use App\State\TicketCollectionProvider;
 use App\State\TicketStateProcessor;
+use ArrayObject;
 use DateTimeImmutable;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
@@ -64,7 +65,7 @@ use Symfony\Component\Validator\Constraints as Assert;
                 summary: 'Assign a technician to a ticket',
                 description: 'Assigns a technician to a ticket, sets status to ASSIGNED, and records history.',
                 requestBody: new RequestBody(
-                    content: new \ArrayObject([
+                    content: new ArrayObject([
                         'application/json' => [
                             'schema' => [
                                 '$ref' => '#/components/schemas/AssignTechnicianDto',

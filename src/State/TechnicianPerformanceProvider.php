@@ -20,14 +20,23 @@ class TechnicianPerformanceProvider implements ProviderInterface
 
     public function provide(Operation $operation, array $uriVariables = [], array $context = []): object|array|null
     {
-        $sql = "SELECT tech.id as technician_id, 
-                       tech.first_name || ' ' || tech.last_name as name,
-                       COUNT(t.id) as closed_tickets,
-                       AVG(EXTRACT(EPOCH FROM (t.closed_at - t.created_at))) / 3600 as avg_closing_time
-                FROM ticket t
-                JOIN technician tech ON t.assigned_technician_id = tech.id
-                WHERE t.status = 'DONE' AND t.closed_at IS NOT NULL
-                GROUP BY tech.id, tech.first_name, tech.last_name";
+        $sql = "SELECT
+                    tech.id AS technician_id,
+                    CONCAT_WS(' ', tech.first_name, tech.last_name) AS name,
+                    COALESCE(stats.closed_tickets, 0) AS closed_tickets,
+                    COALESCE(stats.avg_closing_time, 0) AS avg_closing_time
+                FROM technician tech
+                         LEFT JOIN (
+                    SELECT
+                        assigned_technician_id,
+                        COUNT(*) AS closed_tickets,
+                        AVG(EXTRACT(EPOCH FROM (closed_at - created_at))) / 3600 AS avg_closing_time
+                    FROM ticket
+                    WHERE status = 'DONE'
+                      AND closed_at IS NOT NULL
+                    GROUP BY assigned_technician_id
+                ) stats
+                   ON stats.assigned_technician_id = tech.id";
 
         $rsm = new ResultSetMapping();
         $rsm->addScalarResult('technician_id', 'technicianId', 'integer');

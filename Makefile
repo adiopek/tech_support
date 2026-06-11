@@ -1,6 +1,6 @@
 DOCKER_COMPOSE = docker compose -f docker-compose.dev.yml
 DOCKER_COMPOSE_PROD = docker compose -f docker-compose.prod.yml
-PHP_CONT = $(DOCKER_COMPOSE) exec php
+PHP_CONT = $(DOCKER_COMPOSE) exec -e APP_ENV=dev php
 PHP_BIN = $(PHP_CONT) php
 COMPOSER = $(PHP_CONT) composer
 CONSOLE = $(PHP_BIN) bin/console
@@ -58,7 +58,7 @@ db-init: db-migrate db-fixtures ## Initialize the database (migrate and load fix
 ## Quality and Testing
 .PHONY: test
 test: ## Run tests
-	$(PHP_CONT) vendor/bin/phpunit
+	-$(DOCKER_COMPOSE) exec -e APP_ENV=test php vendor/bin/phpunit
 
 .PHONY: stan
 stan: ## Run PHPStan
@@ -66,7 +66,7 @@ stan: ## Run PHPStan
 
 .PHONY: lint
 lint: ## Lint YAML and Twig files
-	$(CONSOLE) lint:yaml config
+	$(CONSOLE) lint:yaml config --parse-tags
 	$(CONSOLE) lint:twig templates
 
 ## Full project setup
