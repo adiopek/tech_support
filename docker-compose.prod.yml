@@ -7,6 +7,8 @@ services:
         INSTALL_XDEBUG: "false"
     working_dir: /app
     restart: unless-stopped
+    ports:
+      - "8080:80"
     environment:
       SERVER_NAME: ":80"
       DATABASE_URL: "postgresql://app:app@db:5432/app?serverVersion=16&charset=utf8"
