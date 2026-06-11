@@ -1,4 +1,5 @@
 DOCKER_COMPOSE = docker compose -f docker-compose.dev.yml
+DOCKER_COMPOSE_PROD = docker compose -f docker-compose.prod.yml
 PHP_CONT = $(DOCKER_COMPOSE) exec php
 PHP_BIN = $(PHP_CONT) php
 COMPOSER = $(PHP_CONT) composer
@@ -71,3 +72,11 @@ lint: ## Lint YAML and Twig files
 ## Full project setup
 .PHONY: init
 init: build up install db-init ## Fully initialize the project
+
+.PHONY: deploy
+deploy: ## Deploy the project to production
+	$(DOCKER_COMPOSE_PROD) build
+	$(DOCKER_COMPOSE_PROD) up -d
+	$(DOCKER_COMPOSE_PROD) exec php composer install --no-dev --optimize-autoloader
+	$(DOCKER_COMPOSE_PROD) exec php bin/console doctrine:migrations:migrate --no-interaction
+	$(DOCKER_COMPOSE_PROD) exec php bin/console cache:clear
