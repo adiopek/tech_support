@@ -1,0 +1,187 @@
+
+Current configuration for extension with alias "api_platform"
+=============================================================
+
+api_platform:
+    title: 'Hello API Platform'
+    version: 1.0.0
+    formats:
+        jsonld:
+            mime_types:
+                - application/ld+json
+    docs_formats:
+        jsonld:
+            mime_types:
+                - application/ld+json
+        jsonopenapi:
+            mime_types:
+                - application/vnd.openapi+json
+        html:
+            mime_types:
+                - text/html
+    defaults:
+        stateless: true
+        optimistic_locking: true
+        cache_headers:
+            vary:
+                - Content-Type
+                - Authorization
+                - Origin
+        http_cache:
+            public: true
+            invalidation:
+                enabled: true
+        extra_properties:
+            standard_put: true
+            rfc_7807_compliant_errors: true
+        parameters: {  }
+    description: ''
+    show_webby: true
+    use_symfony_listeners: false
+    name_converter: null
+    asset_package: null
+    path_segment_name_generator: api_platform.metadata.path_segment_name_generator.underscore
+    inflector: api_platform.metadata.inflector
+    validator:
+        serialize_payload_fields: {  }
+        query_parameter_validation: true
+    jsonapi:
+        use_iri_as_id: true
+        allow_client_generated_id: false
+    eager_loading:
+        enabled: true
+        fetch_partial: false
+        max_joins: 30
+        force_eager: true
+    handle_symfony_errors: false
+    enable_swagger: true
+    enable_json_streamer: false
+    enable_swagger_ui: true
+    enable_re_doc: true
+    enable_scalar: true
+    enable_entrypoint: true
+    enable_docs: true
+    enable_profiler: true
+    enable_phpdoc_parser: true
+    enable_link_security: true
+    collection:
+        exists_parameter_name: exists
+        order: ASC
+        order_parameter_name: order
+        order_nulls_comparison: null
+        pagination:
+            enabled: true
+            page_parameter_name: page
+            enabled_parameter_name: pagination
+            items_per_page_parameter_name: itemsPerPage
+            partial_parameter_name: partial
+    mapping:
+        imports: {  }
+        paths: {  }
+    resource_class_directories: {  }
+    serializer:
+        hydra_prefix: false
+    doctrine:
+        enabled: true
+    doctrine_mongodb_odm:
+        enabled: false
+    oauth:
+        enabled: false
+        clientId: ''
+        clientSecret: ''
+        pkce: false
+        type: oauth2
+        flow: application
+        tokenUrl: ''
+        authorizationUrl: ''
+        refreshUrl: ''
+        scopes: {  }
+    graphql:
+        enabled: false
+        default_ide: graphiql
+        graphiql:
+            enabled: false
+        introspection:
+            enabled: true
+        max_query_depth: 20
+        graphql_playground:
+            enabled: false
+        max_query_complexity: 500
+        nesting_separator: _
+        collection:
+            pagination:
+                enabled: true
+    swagger:
+        persist_authorization: false
+        versions:
+            - 3
+        api_keys: {  }
+        http_auth: {  }
+        swagger_ui_extra_configuration: {  }
+    http_cache:
+        public: null
+        invalidation:
+            enabled: false
+            varnish_urls: {  }
+            urls: {  }
+            scoped_clients: {  }
+            max_header_length: 7500
+            request_options: {  }
+            purger: api_platform.http_cache.purger.varnish
+            xkey:
+                glue: ' '
+    mercure:
+        enabled: false
+        hub_url: null
+        include_type: false
+    messenger:
+        enabled: true
+    elasticsearch:
+        enabled: false
+        hosts: {  }
+        ssl_ca_bundle: null
+        ssl_verification: true
+        client: elasticsearch
+    openapi:
+        contact:
+            name: null
+            url: null
+            email: null
+        termsOfService: null
+        tags: {  }
+        license:
+            name: null
+            url: null
+            identifier: null
+        swagger_ui_extra_configuration: {  }
+        scalar_extra_configuration: {  }
+        overrideResponses: true
+        error_resource_class: null
+        validation_error_resource_class: null
+    maker:
+        enabled: true
+        namespace_prefix: ''
+    mcp:
+        enabled: true
+        format: jsonld
+    exception_to_status:
+        Symfony\Component\Serializer\Exception\ExceptionInterface: 400
+        ApiPlatform\Metadata\Exception\InvalidArgumentException: 400
+        Doctrine\ORM\OptimisticLockException: 409
+    patch_formats:
+        json:
+            mime_types:
+                - application/merge-patch+json
+    error_formats:
+        jsonld:
+            mime_types:
+                - application/ld+json
+        jsonproblem:
+            mime_types:
+                - application/problem+json
+        json:
+            mime_types:
+                - application/problem+json
+                - application/json
+    jsonschema_formats: {  }
+
