@@ -20,7 +20,10 @@ RUN docker-php-ext-install \
     pdo_pgsql
 
 COPY Caddyfile /etc/caddy/Caddyfile
+ENV APP_ENV=prod
 COPY . /app
+RUN composer install --no-dev --optimize-autoloader
+RUN php bin/console asset-map:compile
 
 COPY docker/php/docker-entrypoint.sh /usr/local/bin/docker-entrypoint
 RUN chmod +x /usr/local/bin/docker-entrypoint
