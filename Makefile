@@ -76,5 +76,7 @@ init: build up install db-init ## Fully initialize the project
 .PHONY: deploy
 deploy: ## Deploy the project to production
 	$(DOCKER_COMPOSE_PROD) --env-file .env.prod up -d --build
+	$(DOCKER_COMPOSE_PROD) exec -e APP_ENV=prod php composer install --no-dev --optimize-autoloader
 	$(DOCKER_COMPOSE_PROD) exec -e APP_ENV=prod php bin/console doctrine:migrations:migrate --no-interaction
 	$(DOCKER_COMPOSE_PROD) exec -e APP_ENV=prod php bin/console cache:clear
+
