@@ -43,20 +43,22 @@ class Technician
     #[ORM\Column]
     private ?int $id = null;
 
-    // TODO: Validate length
     #[ORM\Column(length: 255)]
     #[Groups(['ticket:read'])]
     #[Assert\NotBlank]
+    #[Assert\Length(min: 3, max: 255)]
     private ?string $firstName = null;
 
     #[ORM\Column(length: 255)]
     #[Groups(['ticket:read'])]
     #[Assert\NotBlank]
+    #[Assert\Length(min: 3, max: 255)]
     private ?string $lastName = null;
 
     #[ORM\Column(length: 255, unique: true)]
     #[Assert\NotBlank]
     #[Assert\Email]
+    #[Assert\Length(min: 5, max: 255)]
     private ?string $email = null;
 
     #[ORM\Column]
